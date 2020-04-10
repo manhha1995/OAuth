@@ -38,7 +38,7 @@ app.set('view engine', 'jade');
 // sử dụng body-parser //
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({ secret: '', key: '' }));
+app.use(session({ secret: '249553676199264', key: 'a803fd5a28e386c58dcc0fcc45d952b6' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
