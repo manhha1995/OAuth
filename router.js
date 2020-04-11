@@ -9,23 +9,23 @@ const passport = require('passport');
 const router = express.Router();
 
 module.exports = (() => {
-  router.get('/', res, (req) => {
-    res.render('index', { user: req.user });
+  router.get('/', function(req, res) {
+    res.render('home', { user: req.user });
   });
-  router.get('/login', res, (req) => {
+  router.get('/login', function(req, res) {
     // Return to login
   });
-  router.get('/account', ensureAuthenticated, res, (req) => {
+  router.get('/account', ensureAuthenticated, function(req, res) {
     res.render('/account', { user: req.user });
   });
 
-  router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'emailorphonenumber' }));
+  router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
-  router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect }), req, (res) => {
+  router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login'}), function(req, res) {
     res.redirect('/');
   });
 
-  router.get('/logout', req, (res) => {
+  router.get('/logout', function(req, res) {
     req.logout('/');
     res.redirect('/');
   });
@@ -34,7 +34,7 @@ module.exports = (() => {
 });
 
 // thử authenticated //
-ensureAuthenticated(req, res, (next) => {
+ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
-});
+};
